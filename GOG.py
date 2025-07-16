@@ -2,73 +2,68 @@ import streamlit as st
 
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
-# --- Custom Style: Dark, Clean, Tactical ---
+# === SCP-Inspired Terminal CSS ===
 st.markdown("""
 <style>
-    /* Background gradient */
-    .stApp {
-        background: linear-gradient(145deg, #0e1117 40%, #0a0c10 100%);
-        color: #ffffff;
-        font-family: 'Segoe UI', sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    html, body, .stApp {
+        background-color: #000;
+        color: #00ff88;
+        font-family: 'Share Tech Mono', monospace;
     }
 
     h1 {
-        color: #58a6ff;
+        font-size: 2.8em;
         text-align: center;
-        font-size: 2.5em;
-        text-shadow: 0 0 10px #58a6ff33;
-        margin-top: 10px;
+        text-shadow: 0 0 10px #00ff8855, 0 0 20px #00ff8855;
+        margin-bottom: 0;
     }
 
-    .stTextInput>div>div>input {
-        background-color: #1a1e24;
-        color: white;
-        border: 1px solid #333;
+    .stTextInput input {
+        background-color: #001a11;
+        color: #00ff88;
+        border: 1px solid #00ff88;
         border-radius: 6px;
-        padding: 8px;
     }
 
     .stButton>button {
-        background-color: #238636;
-        color: white;
-        border: none;
-        padding: 0.6em 1.2em;
-        border-radius: 8px;
+        background-color: transparent;
+        color: #00ff88;
+        border: 1px solid #00ff88;
+        border-radius: 6px;
         font-weight: bold;
+        padding: 0.5em 1.2em;
         transition: all 0.2s ease-in-out;
+        box-shadow: 0 0 5px #00ff8855;
     }
 
     .stButton>button:hover {
-        background-color: #2ea043;
-        box-shadow: 0 0 8px #2ea04355;
-        transform: scale(1.02);
+        background-color: #00ff88;
+        color: #000;
+        box-shadow: 0 0 15px #00ff88aa;
+        transform: scale(1.04);
     }
 
-    .block {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 15px 0;
+    .stCodeBlock {
+        border: 1px solid #00ff88;
+        background-color: #001a11;
+        color: #00ff88;
+        border-radius: 6px;
     }
 
-    code {
-        background-color: #0d1117 !important;
-        color: #c9d1d9 !important;
-        padding: 10px;
-        border-radius: 8px;
-        display: block;
-        border: 1px solid #30363d;
+    hr {
+        border-color: #00ff88;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# 🐍 Logo + Title
+# === Serpent’s Hand Logo + Title ===
 st.image("https://upload.wikimedia.org/wikipedia/commons/f/fe/Serpent%E2%80%99s_Hand_logo.png?20220801160440", width=120)
 st.title("Serpent's Hand Command Generator")
-st.markdown("Select your division and rank, then enter your name to generate your custom morph command.")
+st.markdown("---")
 
-# --- Session State Initialization ---
+# === Session State ===
 if "division" not in st.session_state:
     st.session_state.division = None
 if "rank" not in st.session_state:
@@ -78,8 +73,8 @@ if "name" not in st.session_state:
 if "generate" not in st.session_state:
     st.session_state.generate = False
 
-# --- Division Buttons ---
-st.subheader("Choose Division")
+# === Division Buttons ===
+st.subheader("Select Division")
 col1, col2, col3 = st.columns(3)
 with col1:
     if st.button("Ψ Combat"):
@@ -97,13 +92,13 @@ with col3:
         st.session_state.rank = "Σ-X | Whisperer"
         st.session_state.generate = False
 
-# --- Name Input ---
+# === Name Input ===
 name_input = st.text_input("Enter your Roblox Name", st.session_state.name)
 st.session_state.name = name_input.strip()
 
-# --- Rank Selection ---
+# === Rank Buttons ===
 if st.session_state.division == "combat":
-    st.subheader("Choose Ψ Combat Rank")
+    st.subheader("Select Ψ Rank")
     cols = st.columns(9)
     for i in range(9):
         with cols[i]:
@@ -112,7 +107,7 @@ if st.session_state.division == "combat":
                 st.session_state.generate = False
 
 elif st.session_state.division == "diplomat":
-    st.subheader("Choose Φ Diplomat Rank")
+    st.subheader("Select Φ Rank")
     d1, d2, d3 = st.columns(3)
     if d1.button("Φ-1"):
         st.session_state.rank = "Φ-1 | Jr. Scribe"
@@ -124,11 +119,11 @@ elif st.session_state.division == "diplomat":
         st.session_state.rank = "Φ-3 | Sr. Scribe"
         st.session_state.generate = False
 
-# --- Generate Button ---
+# === Generate Button ===
 if st.button("Generate Command"):
     st.session_state.generate = True
 
-# --- Output Command ---
+# === Command Output ===
 if st.session_state.generate and st.session_state.name and st.session_state.rank:
     div = st.session_state.division
     rank = st.session_state.rank
@@ -157,8 +152,6 @@ if st.session_state.generate and st.session_state.name and st.session_state.rank
         morph = "TSHWS"
         rank2 = "Serpent's Hand | Σ-X | Whisperer"
 
-    # ✅ Final Command Output
-    st.markdown("### ✅ Generated Morph Command:")
     cmd = (
         f"run permmorph {name} {morph} & "
         f"permmaxhealth {name} {hp} & "
@@ -166,6 +159,9 @@ if st.session_state.generate and st.session_state.name and st.session_state.rank
         f"crtag {name} 110 139 61 & "
         f"rtag {name} {rank2}"
     )
+
+    st.markdown("---")
+    st.subheader("✅ Generated Morph Command")
     st.code(cmd, language="bash")
 
 elif st.session_state.generate and not st.session_state.name:
