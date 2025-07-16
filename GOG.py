@@ -59,7 +59,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # === Serpent’s Hand Logo + Title ===
-st.image("https://imgur.com/gallery/serpent-hand-zls9jEu", width=120)
+st.image("https://i.imgur.com/QA192Wd.png", width=120)
 st.title("Serpent's Hand Command Generator")
 st.markdown("---")
 
