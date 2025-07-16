@@ -34,44 +34,41 @@ st.markdown("""
         transition: all 0.2s ease-in-out;
     }
 
-    /* Combat */
+    /* Division Buttons Colors ONLY */
     div[data-testid="stHorizontalBlock"] > div:nth-child(1) button {
         background-color: #1aff66;
         color: black;
         border: 1px solid #1aff66;
         box-shadow: 0 0 8px #1aff6655;
     }
-
     div[data-testid="stHorizontalBlock"] > div:nth-child(1) button:hover {
         background-color: #33ff77;
         box-shadow: 0 0 16px #33ff77aa;
     }
 
-    /* Diplomat */
     div[data-testid="stHorizontalBlock"] > div:nth-child(2) button {
         background-color: #00e673;
         color: black;
         border: 1px solid #00e673;
         box-shadow: 0 0 8px #00e67355;
     }
-
     div[data-testid="stHorizontalBlock"] > div:nth-child(2) button:hover {
         background-color: #1aff88;
         box-shadow: 0 0 16px #1aff88aa;
     }
 
-    /* Librarian */
     div[data-testid="stHorizontalBlock"] > div:nth-child(3) button {
         background-color: #009966;
         color: black;
         border: 1px solid #009966;
         box-shadow: 0 0 8px #00996655;
     }
-
     div[data-testid="stHorizontalBlock"] > div:nth-child(3) button:hover {
         background-color: #00cc88;
         box-shadow: 0 0 16px #00cc88aa;
     }
+
+    /* Rank buttons & others keep default Streamlit style */
 
     .stCodeBlock {
         border: 1px solid #00ff88;
