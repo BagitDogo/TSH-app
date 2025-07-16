@@ -4,6 +4,7 @@ st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layo
 
 # === SCP-Inspired Terminal CSS ===
 st.markdown("""
+st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -27,21 +28,50 @@ st.markdown("""
         border-radius: 6px;
     }
 
+    /* Base button style */
     .stButton>button {
-        background-color: transparent;
-        color: #00ff88;
-        border: 1px solid #00ff88;
         border-radius: 6px;
         font-weight: bold;
         padding: 0.5em 1.2em;
         transition: all 0.2s ease-in-out;
-        box-shadow: 0 0 5px #00ff8855;
     }
 
-    .stButton>button:hover {
-        background-color: #00ff88;
-        color: #000;
-        box-shadow: 0 0 15px #00ff88aa;
+    /* Combat button */
+    .stButton>button:has-text("Ψ Combat Ψ") {
+        background-color: #1aff66;
+        color: black;
+        border: 1px solid #1aff66;
+        box-shadow: 0 0 8px #1aff6655;
+    }
+    .stButton>button:has-text("Ψ Combat Ψ"):hover {
+        background-color: #33ff77;
+        box-shadow: 0 0 16px #33ff77aa;
+        transform: scale(1.04);
+    }
+
+    /* Diplomat button */
+    .stButton>button:has-text("Φ Diplomat Φ") {
+        background-color: #00e673;
+        color: black;
+        border: 1px solid #00e673;
+        box-shadow: 0 0 8px #00e67355;
+    }
+    .stButton>button:has-text("Φ Diplomat Φ"):hover {
+        background-color: #1aff88;
+        box-shadow: 0 0 16px #1aff88aa;
+        transform: scale(1.04);
+    }
+
+    /* Librarian button */
+    .stButton>button:has-text("Σ Librarian Σ") {
+        background-color: #009966;
+        color: black;
+        border: 1px solid #009966;
+        box-shadow: 0 0 8px #00996655;
+    }
+    .stButton>button:has-text("Σ Librarian Σ"):hover {
+        background-color: #00cc88;
+        box-shadow: 0 0 16px #00cc88aa;
         transform: scale(1.04);
     }
 
@@ -57,6 +87,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
 
 # === Serpent’s Hand Logo + Title ===
 st.image("https://i.imgur.com/QA192Wd.png", width=250)
