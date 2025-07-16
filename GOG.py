@@ -59,7 +59,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # === Serpent’s Hand Logo + Title ===
-st.image("https://scpstore.org/cdn/shop/products/kiss-cut-stickers-5.5x5.5-default-61d4bba5170d8.png?v=1649862918", width=120)
+st.image("https://i.imgur.com/kWmucS2g.jpg", width=120)
 st.title("Serpent's Hand Command Generator")
 st.markdown("---")
 
