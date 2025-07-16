@@ -59,7 +59,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # === Serpent’s Hand Logo + Title ===
-st.image("https://static.wikia.nocookie.net/villains/images/a/a5/TheSerpentsHand.png/revision/latest/scale-to-width-down/268?cb=20171104212729", width=120)
+st.image("https://static.wikia.nocookie.net/villains/images/a/a5/TheSerpentsHand.png/revision/latest?cb=20171104212729", width=120)
 st.title("Serpent's Hand Command Generator")
 st.markdown("---")
 
