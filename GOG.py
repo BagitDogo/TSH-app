@@ -32,17 +32,45 @@ st.markdown("""
         font-weight: bold;
         padding: 0.5em 1.2em;
         transition: all 0.2s ease-in-out;
-        background-color: transparent;
-        color: #00ff88;
-        border: 1px solid #00ff88;
-        box-shadow: 0 0 5px #00ff8855;
     }
 
-    .stButton>button:hover {
-        background-color: #00ff88;
+    /* Combat */
+    div[data-testid="stHorizontalBlock"] > div:nth-child(1) button {
+        background-color: #1aff66;
         color: black;
-        box-shadow: 0 0 15px #00ff88aa;
-        transform: scale(1.04);
+        border: 1px solid #1aff66;
+        box-shadow: 0 0 8px #1aff6655;
+    }
+
+    div[data-testid="stHorizontalBlock"] > div:nth-child(1) button:hover {
+        background-color: #33ff77;
+        box-shadow: 0 0 16px #33ff77aa;
+    }
+
+    /* Diplomat */
+    div[data-testid="stHorizontalBlock"] > div:nth-child(2) button {
+        background-color: #00e673;
+        color: black;
+        border: 1px solid #00e673;
+        box-shadow: 0 0 8px #00e67355;
+    }
+
+    div[data-testid="stHorizontalBlock"] > div:nth-child(2) button:hover {
+        background-color: #1aff88;
+        box-shadow: 0 0 16px #1aff88aa;
+    }
+
+    /* Librarian */
+    div[data-testid="stHorizontalBlock"] > div:nth-child(3) button {
+        background-color: #009966;
+        color: black;
+        border: 1px solid #009966;
+        box-shadow: 0 0 8px #00996655;
+    }
+
+    div[data-testid="stHorizontalBlock"] > div:nth-child(3) button:hover {
+        background-color: #00cc88;
+        box-shadow: 0 0 16px #00cc88aa;
     }
 
     .stCodeBlock {
@@ -63,85 +91,29 @@ st.image("https://i.imgur.com/QA192Wd.png", width=250)
 st.title("Serpent's Hand Morph Generator")
 st.markdown("---")
 
-# === Session State ===
+# === Session State Defaults ===
 for key in ["division", "rank", "name", "generate"]:
     if key not in st.session_state:
         st.session_state[key] = None if key != "name" else ""
 
-# === Division Buttons (HTML Colored) ===
+# === Division Buttons ===
 st.subheader("Select Division:")
 col1, col2, col3 = st.columns(3)
-
-combat_html = """
-<div style="text-align:center;">
-    <form action="">
-        <input type="hidden" name="division" value="combat">
-        <button style="
-            background-color:#1aff66;
-            border:none;
-            padding:10px 24px;
-            font-weight:bold;
-            font-family:'Share Tech Mono', monospace;
-            border-radius:8px;
-            color:black;
-            box-shadow:0 0 10px #1aff66;
-            cursor:pointer;
-        ">Ψ Combat Ψ</button>
-    </form>
-</div>
-"""
-
-diplomat_html = """
-<div style="text-align:center;">
-    <form action="">
-        <input type="hidden" name="division" value="diplomat">
-        <button style="
-            background-color:#00cc66;
-            border:none;
-            padding:10px 24px;
-            font-weight:bold;
-            font-family:'Share Tech Mono', monospace;
-            border-radius:8px;
-            color:black;
-            box-shadow:0 0 10px #00cc66;
-            cursor:pointer;
-        ">Φ Diplomat Φ</button>
-    </form>
-</div>
-"""
-
-librarian_html = """
-<div style="text-align:center;">
-    <form action="">
-        <input type="hidden" name="division" value="librarian">
-        <button style="
-            background-color:#008855;
-            border:none;
-            padding:10px 24px;
-            font-weight:bold;
-            font-family:'Share Tech Mono', monospace;
-            border-radius:8px;
-            color:black;
-            box-shadow:0 0 10px #008855;
-            cursor:pointer;
-        ">Σ Librarian Σ</button>
-    </form>
-</div>
-"""
-
 with col1:
-    st.markdown(combat_html, unsafe_allow_html=True)
+    if st.button("Ψ Combat Ψ"):
+        st.session_state.division = "combat"
+        st.session_state.rank = None
+        st.session_state.generate = False
 with col2:
-    st.markdown(diplomat_html, unsafe_allow_html=True)
+    if st.button("Φ Diplomat Φ"):
+        st.session_state.division = "diplomat"
+        st.session_state.rank = None
+        st.session_state.generate = False
 with col3:
-    st.markdown(librarian_html, unsafe_allow_html=True)
-
-# === Detect Division from URL ===
-params = st.query_params
-if "division" in params:
-    st.session_state.division = params["division"][0]
-    st.session_state.rank = None
-    st.session_state.generate = False
+    if st.button("Σ Librarian Σ"):
+        st.session_state.division = "librarian"
+        st.session_state.rank = "Σ-X | Whisperer"
+        st.session_state.generate = False
 
 # === Name Input ===
 st.session_state.name = st.text_input("Enter your Roblox Name", st.session_state.name or "").strip()
@@ -169,18 +141,15 @@ elif st.session_state.division == "diplomat":
         st.session_state.rank = "Φ-3 | Sr. Scribe"
         st.session_state.generate = False
 
-elif st.session_state.division == "librarian":
-    st.session_state.rank = "Σ-X | Whisperer"
-
 # === Generate Button ===
 if st.button("Generate Command"):
     st.session_state.generate = True
 
-# === Command Output ===
+# === Output Command ===
 if st.session_state.generate and st.session_state.name and st.session_state.rank:
-    div = st.session_state.division
-    rank = st.session_state.rank
     name = st.session_state.name
+    rank = st.session_state.rank
+    div = st.session_state.division
     morph = ""
     hp = 100
     rank2 = ""
