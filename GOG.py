@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
 # Optional logo (upload your own image file or use a URL)
-st.(https://static.wikia.nocookie.net/scp-db/images/e/e7/Serpent%27s_Hand.png/revision/latest?cb=20220430175904", width=150)
+st.image("https://static.wikia.nocookie.net/scp-db/images/e/e7/Serpent%27s_Hand.png/revision/latest?cb=20220430175904", width=150)
 st.title("Serpent's Hand Command Generator")
 st.markdown("Generate role commands for the **Serpent's Hand** in style.")
 
