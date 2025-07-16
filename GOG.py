@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
-# === SCP-Inspired Terminal CSS ===
+# === SCP-Inspired Terminal CSS with scoped division buttons colors ===
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -34,36 +34,39 @@ st.markdown("""
         transition: all 0.2s ease-in-out;
     }
 
-    /* Division Buttons Colors ONLY */
-    div[data-testid="stHorizontalBlock"] > div:nth-child(1) button {
-        background-color: #1aff66;
+    /* ONLY Division Buttons inside #division-buttons container */
+    #division-buttons button {
+        font-weight: bold;
         color: black;
-        border: 1px solid #1aff66;
+        border: 1px solid transparent;
+        box-shadow: 0 0 8px transparent;
+        background-color: #222; /* fallback */
+        transition: all 0.2s ease-in-out;
+    }
+    #division-buttons button:nth-child(1) {
+        background-color: #1aff66;
+        border-color: #1aff66;
         box-shadow: 0 0 8px #1aff6655;
     }
-    div[data-testid="stHorizontalBlock"] > div:nth-child(1) button:hover {
+    #division-buttons button:nth-child(1):hover {
         background-color: #33ff77;
         box-shadow: 0 0 16px #33ff77aa;
     }
-
-    div[data-testid="stHorizontalBlock"] > div:nth-child(2) button {
+    #division-buttons button:nth-child(2) {
         background-color: #00e673;
-        color: black;
-        border: 1px solid #00e673;
+        border-color: #00e673;
         box-shadow: 0 0 8px #00e67355;
     }
-    div[data-testid="stHorizontalBlock"] > div:nth-child(2) button:hover {
+    #division-buttons button:nth-child(2):hover {
         background-color: #1aff88;
         box-shadow: 0 0 16px #1aff88aa;
     }
-
-    div[data-testid="stHorizontalBlock"] > div:nth-child(3) button {
+    #division-buttons button:nth-child(3) {
         background-color: #009966;
-        color: black;
-        border: 1px solid #009966;
+        border-color: #009966;
         box-shadow: 0 0 8px #00996655;
     }
-    div[data-testid="stHorizontalBlock"] > div:nth-child(3) button:hover {
+    #division-buttons button:nth-child(3):hover {
         background-color: #00cc88;
         box-shadow: 0 0 16px #00cc88aa;
     }
@@ -93,24 +96,28 @@ for key in ["division", "rank", "name", "generate"]:
     if key not in st.session_state:
         st.session_state[key] = None if key != "name" else ""
 
-# === Division Buttons ===
+# === Division Buttons inside a container with id ===
 st.subheader("Select Division:")
-col1, col2, col3 = st.columns(3)
-with col1:
-    if st.button("Ψ Combat Ψ"):
-        st.session_state.division = "combat"
-        st.session_state.rank = None
-        st.session_state.generate = False
-with col2:
-    if st.button("Φ Diplomat Φ"):
-        st.session_state.division = "diplomat"
-        st.session_state.rank = None
-        st.session_state.generate = False
-with col3:
-    if st.button("Σ Librarian Σ"):
-        st.session_state.division = "librarian"
-        st.session_state.rank = "Σ-X | Whisperer"
-        st.session_state.generate = False
+with st.container():
+    # Add an HTML div with an id to wrap the buttons for styling scope
+    st.markdown('<div id="division-buttons">', unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        if st.button("Ψ Combat Ψ"):
+            st.session_state.division = "combat"
+            st.session_state.rank = None
+            st.session_state.generate = False
+    with col2:
+        if st.button("Φ Diplomat Φ"):
+            st.session_state.division = "diplomat"
+            st.session_state.rank = None
+            st.session_state.generate = False
+    with col3:
+        if st.button("Σ Librarian Σ"):
+            st.session_state.division = "librarian"
+            st.session_state.rank = "Σ-X | Whisperer"
+            st.session_state.generate = False
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # === Name Input ===
 st.session_state.name = st.text_input("Enter your Roblox Name", st.session_state.name or "").strip()
