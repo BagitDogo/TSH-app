@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
-# === SCP-Inspired Terminal CSS + Colored Buttons ===
+# === SCP-Inspired Terminal CSS ===
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -38,42 +38,11 @@ st.markdown("""
         box-shadow: 0 0 5px #00ff8855;
     }
 
-    /* === Division Buttons with Different Green Shades === */
-
-    /* Ψ Combat Ψ — 1st button in column */
-    .stButton:nth-of-type(1) button {
-        background-color: #1aff66;
-        border-color: #1aff66;
-        box-shadow: 0 0 10px #1aff6655;
+    .stButton>button:hover {
+        background-color: #00ff88;
         color: black;
-    }
-    .stButton:nth-of-type(1) button:hover {
-        background-color: #33ff77;
-        box-shadow: 0 0 18px #33ff77aa;
-    }
-
-    /* Φ Diplomat Φ — 2nd button in column */
-    .stButton:nth-of-type(2) button {
-        background-color: #00cc66;
-        border-color: #00cc66;
-        box-shadow: 0 0 10px #00cc6655;
-        color: black;
-    }
-    .stButton:nth-of-type(2) button:hover {
-        background-color: #33ff99;
-        box-shadow: 0 0 18px #33ff99aa;
-    }
-
-    /* Σ Librarian Σ — 3rd button in column */
-    .stButton:nth-of-type(3) button {
-        background-color: #008855;
-        border-color: #008855;
-        box-shadow: 0 0 10px #00885555;
-        color: black;
-    }
-    .stButton:nth-of-type(3) button:hover {
-        background-color: #00aa66;
-        box-shadow: 0 0 18px #00aa66aa;
+        box-shadow: 0 0 15px #00ff88aa;
+        transform: scale(1.04);
     }
 
     .stCodeBlock {
@@ -87,7 +56,6 @@ st.markdown("""
         border-color: #00ff88;
     }
 </style>
-
 """, unsafe_allow_html=True)
 
 # === Serpent’s Hand Logo + Title ===
@@ -96,37 +64,87 @@ st.title("Serpent's Hand Morph Generator")
 st.markdown("---")
 
 # === Session State ===
-if "division" not in st.session_state:
-    st.session_state.division = None
-if "rank" not in st.session_state:
-    st.session_state.rank = None
-if "name" not in st.session_state:
-    st.session_state.name = ""
-if "generate" not in st.session_state:
-    st.session_state.generate = False
+for key in ["division", "rank", "name", "generate"]:
+    if key not in st.session_state:
+        st.session_state[key] = None if key != "name" else ""
 
-# === Division Buttons ===
+# === Division Buttons (HTML Colored) ===
 st.subheader("Select Division:")
 col1, col2, col3 = st.columns(3)
+
+combat_html = """
+<div style="text-align:center;">
+    <form action="">
+        <input type="hidden" name="division" value="combat">
+        <button style="
+            background-color:#1aff66;
+            border:none;
+            padding:10px 24px;
+            font-weight:bold;
+            font-family:'Share Tech Mono', monospace;
+            border-radius:8px;
+            color:black;
+            box-shadow:0 0 10px #1aff66;
+            cursor:pointer;
+        ">Ψ Combat Ψ</button>
+    </form>
+</div>
+"""
+
+diplomat_html = """
+<div style="text-align:center;">
+    <form action="">
+        <input type="hidden" name="division" value="diplomat">
+        <button style="
+            background-color:#00cc66;
+            border:none;
+            padding:10px 24px;
+            font-weight:bold;
+            font-family:'Share Tech Mono', monospace;
+            border-radius:8px;
+            color:black;
+            box-shadow:0 0 10px #00cc66;
+            cursor:pointer;
+        ">Φ Diplomat Φ</button>
+    </form>
+</div>
+"""
+
+librarian_html = """
+<div style="text-align:center;">
+    <form action="">
+        <input type="hidden" name="division" value="librarian">
+        <button style="
+            background-color:#008855;
+            border:none;
+            padding:10px 24px;
+            font-weight:bold;
+            font-family:'Share Tech Mono', monospace;
+            border-radius:8px;
+            color:black;
+            box-shadow:0 0 10px #008855;
+            cursor:pointer;
+        ">Σ Librarian Σ</button>
+    </form>
+</div>
+"""
+
 with col1:
-    if st.button("Ψ Combat Ψ"):
-        st.session_state.division = "combat"
-        st.session_state.rank = None
-        st.session_state.generate = False
+    st.markdown(combat_html, unsafe_allow_html=True)
 with col2:
-    if st.button("Φ Diplomat Φ"):
-        st.session_state.division = "diplomat"
-        st.session_state.rank = None
-        st.session_state.generate = False
+    st.markdown(diplomat_html, unsafe_allow_html=True)
 with col3:
-    if st.button("Σ Librarian Σ"):
-        st.session_state.division = "librarian"
-        st.session_state.rank = "Σ-X | Whisperer"
-        st.session_state.generate = False
+    st.markdown(librarian_html, unsafe_allow_html=True)
+
+# Detect division from URL (query params)
+params = st.experimental_get_query_params()
+if "division" in params:
+    st.session_state.division = params["division"][0]
+    st.session_state.rank = None
+    st.session_state.generate = False
 
 # === Name Input ===
-name_input = st.text_input("Enter your Roblox Name", st.session_state.name)
-st.session_state.name = name_input.strip()
+st.session_state.name = st.text_input("Enter your Roblox Name", st.session_state.name or "").strip()
 
 # === Rank Buttons ===
 if st.session_state.division == "combat":
@@ -150,6 +168,9 @@ elif st.session_state.division == "diplomat":
     if d3.button("Φ-3"):
         st.session_state.rank = "Φ-3 | Sr. Scribe"
         st.session_state.generate = False
+
+elif st.session_state.division == "librarian":
+    st.session_state.rank = "Σ-X | Whisperer"
 
 # === Generate Button ===
 if st.button("Generate Command"):
