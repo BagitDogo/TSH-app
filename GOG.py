@@ -1,5 +1,42 @@
 import streamlit as st
 
+st.markdown("""
+    <style>
+        body {
+            background-color: #0e1117;
+            color: white;
+        }
+        .stApp {
+            background-color: #0e1117;
+        }
+        .css-18e3th9, .css-1d391kg {
+            background-color: #161b22;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1, h2, h3 {
+            color: #58a6ff;
+            text-align: center;
+        }
+        .stTextInput>div>div>input {
+            background-color: #0e1117;
+            color: white;
+            border: 1px solid #30363d;
+        }
+        .stSelectbox>div>div>div {
+            background-color: #0e1117;
+            color: white;
+            border: 1px solid #30363d;
+        }
+        button {
+            background-color: #238636 !important;
+            color: white !important;
+            border-radius: 8px;
+            padding: 0.6em 1.2em;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
 # Optional logo (upload your own image file or use a URL)
