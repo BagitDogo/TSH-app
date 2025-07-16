@@ -74,7 +74,7 @@ if "generate" not in st.session_state:
     st.session_state.generate = False
 
 # === Division Buttons ===
-st.subheader("Select Division")
+st.subheader("Select Division:")
 col1, col2, col3 = st.columns(3)
 with col1:
     if st.button("Ψ Combat"):
