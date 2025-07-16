@@ -5,7 +5,7 @@ st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layo
 # Optional logo (upload your own image file or use a URL)
 st.image("https://static.wikia.nocookie.net/scp-db/images/e/e7/Serpent%27s_Hand.png/revision/latest/scale-to-width-down/1000?cb=20220430175904", width=150)
 st.title("Serpent's Hand Command Generator")
-st.markdown("Generate role commands for the **Serpent's Hand** in style.")
+st.markdown("Morph Code Generator.")
 
 div = st.selectbox("Division", ["Ψ Combat", "Φ Diplomat", "Σ Librarian"])
 
