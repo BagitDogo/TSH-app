@@ -1,32 +1,74 @@
 import streamlit as st
 
-# Page config and style
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
+
+# --- Custom Style: Dark, Clean, Tactical ---
 st.markdown("""
-    <style>
-        .stApp { background-color: #0e1117; }
-        h1, h2, h3 { color: #58a6ff; text-align: center; }
-        .stTextInput>div>div>input {
-            background-color: #161b22;
-            color: white;
-            border: 1px solid #30363d;
-        }
-        .stButton>button {
-            background-color: #238636;
-            color: white;
-            border-radius: 8px;
-            padding: 0.6em 1.2em;
-            margin: 4px;
-        }
-    </style>
+<style>
+    /* Background gradient */
+    .stApp {
+        background: linear-gradient(145deg, #0e1117 40%, #0a0c10 100%);
+        color: #ffffff;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    h1 {
+        color: #58a6ff;
+        text-align: center;
+        font-size: 2.5em;
+        text-shadow: 0 0 10px #58a6ff33;
+        margin-top: 10px;
+    }
+
+    .stTextInput>div>div>input {
+        background-color: #1a1e24;
+        color: white;
+        border: 1px solid #333;
+        border-radius: 6px;
+        padding: 8px;
+    }
+
+    .stButton>button {
+        background-color: #238636;
+        color: white;
+        border: none;
+        padding: 0.6em 1.2em;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .stButton>button:hover {
+        background-color: #2ea043;
+        box-shadow: 0 0 8px #2ea04355;
+        transform: scale(1.02);
+    }
+
+    .block {
+        background-color: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+    }
+
+    code {
+        background-color: #0d1117 !important;
+        color: #c9d1d9 !important;
+        padding: 10px;
+        border-radius: 8px;
+        display: block;
+        border: 1px solid #30363d;
+    }
+</style>
 """, unsafe_allow_html=True)
 
-# 🐍 Logo and title
-st.image("https://upload.wikimedia.org/wikipedia/commons/f/fe/Serpent%E2%80%99s_Hand_logo.png?20220801160440", width=150)
+# 🐍 Logo + Title
+st.image("https://upload.wikimedia.org/wikipedia/commons/f/fe/Serpent%E2%80%99s_Hand_logo.png?20220801160440", width=120)
 st.title("Serpent's Hand Command Generator")
-st.markdown("Select your division and rank, then enter your name to generate a command.")
+st.markdown("Select your division and rank, then enter your name to generate your custom morph command.")
 
-# Initialize session state
+# --- Session State Initialization ---
 if "division" not in st.session_state:
     st.session_state.division = None
 if "rank" not in st.session_state:
@@ -36,7 +78,7 @@ if "name" not in st.session_state:
 if "generate" not in st.session_state:
     st.session_state.generate = False
 
-# Division buttons
+# --- Division Buttons ---
 st.subheader("Choose Division")
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -55,13 +97,13 @@ with col3:
         st.session_state.rank = "Σ-X | Whisperer"
         st.session_state.generate = False
 
-# Name input
-name_input = st.text_input("Name", st.session_state.name)
+# --- Name Input ---
+name_input = st.text_input("Enter your Roblox Name", st.session_state.name)
 st.session_state.name = name_input.strip()
 
-# Rank buttons
+# --- Rank Selection ---
 if st.session_state.division == "combat":
-    st.subheader("Choose Rank")
+    st.subheader("Choose Ψ Combat Rank")
     cols = st.columns(9)
     for i in range(9):
         with cols[i]:
@@ -70,7 +112,7 @@ if st.session_state.division == "combat":
                 st.session_state.generate = False
 
 elif st.session_state.division == "diplomat":
-    st.subheader("Choose Rank")
+    st.subheader("Choose Φ Diplomat Rank")
     d1, d2, d3 = st.columns(3)
     if d1.button("Φ-1"):
         st.session_state.rank = "Φ-1 | Jr. Scribe"
@@ -82,11 +124,11 @@ elif st.session_state.division == "diplomat":
         st.session_state.rank = "Φ-3 | Sr. Scribe"
         st.session_state.generate = False
 
-# Generate button
+# --- Generate Button ---
 if st.button("Generate Command"):
     st.session_state.generate = True
 
-# Command output
+# --- Output Command ---
 if st.session_state.generate and st.session_state.name and st.session_state.rank:
     div = st.session_state.division
     rank = st.session_state.rank
@@ -115,6 +157,8 @@ if st.session_state.generate and st.session_state.name and st.session_state.rank
         morph = "TSHWS"
         rank2 = "Serpent's Hand | Σ-X | Whisperer"
 
+    # ✅ Final Command Output
+    st.markdown("### ✅ Generated Morph Command:")
     cmd = (
         f"run permmorph {name} {morph} & "
         f"permmaxhealth {name} {hp} & "
@@ -122,7 +166,7 @@ if st.session_state.generate and st.session_state.name and st.session_state.rank
         f"crtag {name} 110 139 61 & "
         f"rtag {name} {rank2}"
     )
-    st.success("✅ Command Generated:")
     st.code(cmd, language="bash")
+
 elif st.session_state.generate and not st.session_state.name:
     st.warning("Please enter a name.")
