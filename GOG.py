@@ -136,8 +136,8 @@ with col2:
 with col3:
     st.markdown(librarian_html, unsafe_allow_html=True)
 
-# Detect division from URL (query params)
-params = st.experimental_get_query_params()
+# === Detect Division from URL ===
+params = st.query_params
 if "division" in params:
     st.session_state.division = params["division"][0]
     st.session_state.rank = None
