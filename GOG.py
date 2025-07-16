@@ -34,44 +34,39 @@ st.markdown("""
         transition: all 0.2s ease-in-out;
     }
 
-    /* ONLY Division Buttons inside #division-buttons container */
-    #division-buttons button {
-        font-weight: bold;
-        color: black;
-        border: 1px solid transparent;
-        box-shadow: 0 0 8px transparent;
-        background-color: #222; /* fallback */
-        transition: all 0.2s ease-in-out;
+    /* Target only buttons inside the division buttons container */
+    div[data-testid="stVerticalBlock"] > div > div > div > button:nth-child(1) {
+        background-color: #1aff66 !important;
+        color: black !important;
+        border: 1px solid #1aff66 !important;
+        box-shadow: 0 0 8px #1aff6655 !important;
     }
-    #division-buttons button:nth-child(1) {
-        background-color: #1aff66;
-        border-color: #1aff66;
-        box-shadow: 0 0 8px #1aff6655;
-    }
-    #division-buttons button:nth-child(1):hover {
-        background-color: #33ff77;
-        box-shadow: 0 0 16px #33ff77aa;
-    }
-    #division-buttons button:nth-child(2) {
-        background-color: #00e673;
-        border-color: #00e673;
-        box-shadow: 0 0 8px #00e67355;
-    }
-    #division-buttons button:nth-child(2):hover {
-        background-color: #1aff88;
-        box-shadow: 0 0 16px #1aff88aa;
-    }
-    #division-buttons button:nth-child(3) {
-        background-color: #009966;
-        border-color: #009966;
-        box-shadow: 0 0 8px #00996655;
-    }
-    #division-buttons button:nth-child(3):hover {
-        background-color: #00cc88;
-        box-shadow: 0 0 16px #00cc88aa;
+    div[data-testid="stVerticalBlock"] > div > div > div > button:nth-child(1):hover {
+        background-color: #33ff77 !important;
+        box-shadow: 0 0 16px #33ff77aa !important;
     }
 
-    /* Rank buttons & others keep default Streamlit style */
+    div[data-testid="stVerticalBlock"] > div > div > div > button:nth-child(2) {
+        background-color: #00e673 !important;
+        color: black !important;
+        border: 1px solid #00e673 !important;
+        box-shadow: 0 0 8px #00e67355 !important;
+    }
+    div[data-testid="stVerticalBlock"] > div > div > div > button:nth-child(2):hover {
+        background-color: #1aff88 !important;
+        box-shadow: 0 0 16px #1aff88aa !important;
+    }
+
+    div[data-testid="stVerticalBlock"] > div > div > div > button:nth-child(3) {
+        background-color: #009966 !important;
+        color: black !important;
+        border: 1px solid #009966 !important;
+        box-shadow: 0 0 8px #00996655 !important;
+    }
+    div[data-testid="stVerticalBlock"] > div > div > div > button:nth-child(3):hover {
+        background-color: #00cc88 !important;
+        box-shadow: 0 0 16px #00cc88aa !important;
+    }
 
     .stCodeBlock {
         border: 1px solid #00ff88;
@@ -96,28 +91,27 @@ for key in ["division", "rank", "name", "generate"]:
     if key not in st.session_state:
         st.session_state[key] = None if key != "name" else ""
 
-# === Division Buttons inside a container with id ===
+# === Division Buttons ===
 st.subheader("Select Division:")
-with st.container():
-    # Add an HTML div with an id to wrap the buttons for styling scope
-    st.markdown('<div id="division-buttons">', unsafe_allow_html=True)
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        if st.button("Ψ Combat Ψ"):
-            st.session_state.division = "combat"
-            st.session_state.rank = None
-            st.session_state.generate = False
-    with col2:
-        if st.button("Φ Diplomat Φ"):
-            st.session_state.division = "diplomat"
-            st.session_state.rank = None
-            st.session_state.generate = False
-    with col3:
-        if st.button("Σ Librarian Σ"):
-            st.session_state.division = "librarian"
-            st.session_state.rank = "Σ-X | Whisperer"
-            st.session_state.generate = False
-    st.markdown('</div>', unsafe_allow_html=True)
+div_cols = st.columns(3)
+
+with div_cols[0]:
+    if st.button("Ψ Combat Ψ", key="division_combat"):
+        st.session_state.division = "combat"
+        st.session_state.rank = None
+        st.session_state.generate = False
+
+with div_cols[1]:
+    if st.button("Φ Diplomat Φ", key="division_diplomat"):
+        st.session_state.division = "diplomat"
+        st.session_state.rank = None
+        st.session_state.generate = False
+
+with div_cols[2]:
+    if st.button("Σ Librarian Σ", key="division_librarian"):
+        st.session_state.division = "librarian"
+        st.session_state.rank = "Σ-X | Whisperer"
+        st.session_state.generate = False
 
 # === Name Input ===
 st.session_state.name = st.text_input("Enter your Roblox Name", st.session_state.name or "").strip()
@@ -128,25 +122,25 @@ if st.session_state.division == "combat":
     cols = st.columns(9)
     for i in range(9):
         with cols[i]:
-            if st.button(f"Ψ-{i+1}"):
+            if st.button(f"Ψ-{i+1}", key=f"rank_combat_{i+1}"):
                 st.session_state.rank = i + 1
                 st.session_state.generate = False
 
 elif st.session_state.division == "diplomat":
     st.subheader("Select Φ Rank:")
     d1, d2, d3 = st.columns(3)
-    if d1.button("Φ-1"):
+    if d1.button("Φ-1", key="rank_diplomat_1"):
         st.session_state.rank = "Φ-1 | Jr. Scribe"
         st.session_state.generate = False
-    if d2.button("Φ-2"):
+    if d2.button("Φ-2", key="rank_diplomat_2"):
         st.session_state.rank = "Φ-2 | Scribe"
         st.session_state.generate = False
-    if d3.button("Φ-3"):
+    if d3.button("Φ-3", key="rank_diplomat_3"):
         st.session_state.rank = "Φ-3 | Sr. Scribe"
         st.session_state.generate = False
 
 # === Generate Button ===
-if st.button("Generate Command"):
+if st.button("Generate Command", key="generate_command"):
     st.session_state.generate = True
 
 # === Output Command ===
