@@ -1,88 +1,107 @@
 import streamlit as st
 
+# 🔧 Styling
+st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 st.markdown("""
     <style>
-        body {
-            background-color: #0e1117;
-            color: white;
-        }
-        .stApp {
-            background-color: #0e1117;
-        }
-        .css-18e3th9, .css-1d391kg {
-            background-color: #161b22;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        h1, h2, h3 {
-            color: #58a6ff;
-            text-align: center;
-        }
+        .stApp { background-color: #0e1117; }
+        h1, h2, h3 { color: #58a6ff; text-align: center; }
         .stTextInput>div>div>input {
-            background-color: #0e1117;
+            background-color: #161b22;
             color: white;
             border: 1px solid #30363d;
         }
-        .stSelectbox>div>div>div {
-            background-color: #0e1117;
+        .stButton>button {
+            background-color: #238636;
             color: white;
-            border: 1px solid #30363d;
-        }
-        button {
-            background-color: #238636 !important;
-            color: white !important;
             border-radius: 8px;
             padding: 0.6em 1.2em;
+            margin: 4px;
         }
     </style>
 """, unsafe_allow_html=True)
 
-st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
-
-# Optional logo (upload your own image file or use a URL)
+# 🐍 Header
 st.image("https://upload.wikimedia.org/wikipedia/commons/f/fe/Serpent%E2%80%99s_Hand_logo.png?20220801160440", width=150)
 st.title("Serpent's Hand Command Generator")
-st.markdown("Morph Code Generator.")
+st.markdown("Select your division and rank, then enter your name to generate a command.")
 
-div = st.selectbox("Division", ["Ψ Combat", "Φ Diplomat", "Σ Librarian"])
+# 👉 Division buttons
+st.subheader("Choose Division")
+div = None
+col1, col2, col3 = st.columns(3)
+with col1:
+    if st.button("Ψ Combat"):
+        div = "combat"
+with col2:
+    if st.button("Φ Diplomat"):
+        div = "diplomat"
+with col3:
+    if st.button("Σ Librarian"):
+        div = "librarian"
 
-rank = None
-rank_display = ""
-if div == "Ψ Combat":
-    rank = st.selectbox("Rank", list(range(1, 10)))
-elif div == "Φ Diplomat":
-    rank = st.selectbox("Rank", ["Φ-1 | Jr. Scribe", "Φ-2 | Scribe", "Φ-3 | Sr. Scribe"])
-else:
-    rank_display = "Σ-X | Whisperer"
+if div:
+    name = st.text_input("Name")
+    rank = None
 
-name = st.text_input("Name")
+    # 🧱 Rank buttons
+    if div == "combat":
+        st.subheader("Choose Rank")
+        rcols = st.columns(9)
+        for i in range(9):
+            with rcols[i]:
+                if st.button(f"Ψ-{i+1}"):
+                    rank = i + 1
 
-if st.button("Generate Command"):
-    morph = ""
-    hp = 100
-    rank2 = ""
+    elif div == "diplomat":
+        st.subheader("Choose Rank")
+        d1, d2, d3 = st.columns(3)
+        if d1.button("Φ-1"):
+            rank = "Φ-1 | Jr. Scribe"
+        if d2.button("Φ-2"):
+            rank = "Φ-2 | Scribe"
+        if d3.button("Φ-3"):
+            rank = "Φ-3 | Sr. Scribe"
 
-    if div == "Ψ Combat":
-        r = rank
-        morph = ["TSHLR", "TSHPLR", "TSHMR"][(r - 1) // 3]
-        hp = 125 if r > 6 else 100
-        titles = ["INITIATE", "SPELLMARKED", "VEILWALKER", "EDGEBEARER", "LOREHUNTER", "MINDSHROUND", "PATHBINDER", "SERPENT'S EYE", "GLYPHBLADE"]
-        rank2 = f"Serpent's Hand | Ψ-{r} | {titles[r - 1]}"
+    elif div == "librarian":
+        rank = "Σ-X | Whisperer"
 
-    elif div == "Φ Diplomat":
-        idx = ["Φ-1", "Φ-2", "Φ-3"].index(rank.split(" ")[0])
-        morph = ["TSHJSC", "TSHSC", "TSHSSC"][idx]
-        titles = ["Jr. Scribe", "Scribe", "Sr. Scribe"]
-        rank2 = f"Serpent's Hand | Φ-{idx + 1} | {titles[idx]}"
-
-    else:
-        morph = "TSHWS"
+    # ✅ Command generation
+    if rank and name.strip():
+        morph = ""
         hp = 100
-        rank2 = "Serpent's Hand | Σ-X | Whisperer"
+        rank2 = ""
 
-    if name.strip() == "":
-        st.error("Please enter a name.")
-    else:
-        cmd = f"""run permmorph {name} {morph} & permmaxhealth {name} {hp} & cntag {name} 110 110 110 & crtag {name} 110 139 61 & rtag {name} {rank2}"""
-        st.success("Command Generated:")
+        if div == "combat":
+            morphs = ["TSHLR", "TSHPLR", "TSHMR"]
+            titles = [
+                "INITIATE", "SPELLMARKED", "VEILWALKER",
+                "EDGEBEARER", "LOREHUNTER", "MINDSHROUND",
+                "PATHBINDER", "SERPENT'S EYE", "GLYPHBLADE"
+            ]
+            morph = morphs[(rank - 1) // 3]
+            hp = 125 if rank > 6 else 100
+            rank2 = f"Serpent's Hand | Ψ-{rank} | {titles[rank - 1]}"
+
+        elif div == "diplomat":
+            idx = int(rank[2]) - 1
+            morph = ["TSHJSC", "TSHSC", "TSHSSC"][idx]
+            rank2 = f"Serpent's Hand | Φ-{idx + 1} | {['Jr. Scribe', 'Scribe', 'Sr. Scribe'][idx]}"
+
+        elif div == "librarian":
+            morph = "TSHWS"
+            rank2 = "Serpent's Hand | Σ-X | Whisperer"
+
+        # 🔥 Final output
+        cmd = (
+            f"run permmorph {name} {morph} & "
+            f"permmaxhealth {name} {hp} & "
+            f"cntag {name} 110 110 110 & "
+            f"crtag {name} 110 139 61 & "
+            f"rtag {name} {rank2}"
+        )
+        st.success("✅ Command Generated:")
         st.code(cmd, language="bash")
+
+    elif not name.strip():
+        st.warning("Please enter a name.")
