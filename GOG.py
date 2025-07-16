@@ -32,45 +32,48 @@ st.markdown("""
         font-weight: bold;
         padding: 0.5em 1.2em;
         transition: all 0.2s ease-in-out;
+        background-color: transparent;
+        color: #00ff88;
+        border: 1px solid #00ff88;
+        box-shadow: 0 0 5px #00ff8855;
     }
 
-    /* Ψ Combat Ψ (1st button) */
+    /* === Division Buttons with Different Green Shades === */
+
+    /* Ψ Combat Ψ — 1st button in column */
     .stButton:nth-of-type(1) button {
         background-color: #1aff66;
+        border-color: #1aff66;
+        box-shadow: 0 0 10px #1aff6655;
         color: black;
-        border: 1px solid #1aff66;
-        box-shadow: 0 0 8px #1aff6655;
     }
     .stButton:nth-of-type(1) button:hover {
         background-color: #33ff77;
-        box-shadow: 0 0 16px #33ff77aa;
-        transform: scale(1.04);
+        box-shadow: 0 0 18px #33ff77aa;
     }
 
-    /* Φ Diplomat Φ (2nd button) */
+    /* Φ Diplomat Φ — 2nd button in column */
     .stButton:nth-of-type(2) button {
-        background-color: #00e673;
+        background-color: #00cc66;
+        border-color: #00cc66;
+        box-shadow: 0 0 10px #00cc6655;
         color: black;
-        border: 1px solid #00e673;
-        box-shadow: 0 0 8px #00e67355;
     }
     .stButton:nth-of-type(2) button:hover {
-        background-color: #1aff88;
-        box-shadow: 0 0 16px #1aff88aa;
-        transform: scale(1.04);
+        background-color: #33ff99;
+        box-shadow: 0 0 18px #33ff99aa;
     }
 
-    /* Σ Librarian Σ (3rd button) */
+    /* Σ Librarian Σ — 3rd button in column */
     .stButton:nth-of-type(3) button {
-        background-color: #009966;
+        background-color: #008855;
+        border-color: #008855;
+        box-shadow: 0 0 10px #00885555;
         color: black;
-        border: 1px solid #009966;
-        box-shadow: 0 0 8px #00996655;
     }
     .stButton:nth-of-type(3) button:hover {
-        background-color: #00cc88;
-        box-shadow: 0 0 16px #00cc88aa;
-        transform: scale(1.04);
+        background-color: #00aa66;
+        box-shadow: 0 0 18px #00aa66aa;
     }
 
     .stCodeBlock {
@@ -84,6 +87,7 @@ st.markdown("""
         border-color: #00ff88;
     }
 </style>
+
 """, unsafe_allow_html=True)
 
 # === Serpent’s Hand Logo + Title ===
