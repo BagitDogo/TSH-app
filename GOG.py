@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
 # Optional logo (upload your own image file or use a URL)
-st.image("https://static.wikia.nocookie.net/scp-db/images/e/e7/Serpent%27s_Hand.png/revision/latest/scale-to-width-down/1000?cb=20220430175904", width=150)
+st.image("https://upload.wikimedia.org/wikipedia/commons/f/fe/Serpent%E2%80%99s_Hand_logo.png?20220801160440", width=150)
 st.title("Serpent's Hand Command Generator")
 st.markdown("Morph Code Generator.")
 
