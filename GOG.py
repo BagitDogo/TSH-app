@@ -2,8 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Serpent's Hand Generator", page_icon="🐍", layout="centered")
 
-# === SCP-Inspired Terminal CSS ===
-st.markdown("""
+# === SCP-Inspired Terminal CSS + Colored Buttons ===
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -28,7 +27,6 @@ st.markdown("""
         border-radius: 6px;
     }
 
-    /* Base button style */
     .stButton>button {
         border-radius: 6px;
         font-weight: bold;
@@ -36,40 +34,40 @@ st.markdown("""
         transition: all 0.2s ease-in-out;
     }
 
-    /* Combat button */
-    .stButton>button:has-text("Ψ Combat Ψ") {
+    /* Ψ Combat Ψ (1st button) */
+    .stButton:nth-of-type(1) button {
         background-color: #1aff66;
         color: black;
         border: 1px solid #1aff66;
         box-shadow: 0 0 8px #1aff6655;
     }
-    .stButton>button:has-text("Ψ Combat Ψ"):hover {
+    .stButton:nth-of-type(1) button:hover {
         background-color: #33ff77;
         box-shadow: 0 0 16px #33ff77aa;
         transform: scale(1.04);
     }
 
-    /* Diplomat button */
-    .stButton>button:has-text("Φ Diplomat Φ") {
+    /* Φ Diplomat Φ (2nd button) */
+    .stButton:nth-of-type(2) button {
         background-color: #00e673;
         color: black;
         border: 1px solid #00e673;
         box-shadow: 0 0 8px #00e67355;
     }
-    .stButton>button:has-text("Φ Diplomat Φ"):hover {
+    .stButton:nth-of-type(2) button:hover {
         background-color: #1aff88;
         box-shadow: 0 0 16px #1aff88aa;
         transform: scale(1.04);
     }
 
-    /* Librarian button */
-    .stButton>button:has-text("Σ Librarian Σ") {
+    /* Σ Librarian Σ (3rd button) */
+    .stButton:nth-of-type(3) button {
         background-color: #009966;
         color: black;
         border: 1px solid #009966;
         box-shadow: 0 0 8px #00996655;
     }
-    .stButton>button:has-text("Σ Librarian Σ"):hover {
+    .stButton:nth-of-type(3) button:hover {
         background-color: #00cc88;
         box-shadow: 0 0 16px #00cc88aa;
         transform: scale(1.04);
@@ -87,7 +85,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
 
 # === Serpent’s Hand Logo + Title ===
 st.image("https://i.imgur.com/QA192Wd.png", width=250)
