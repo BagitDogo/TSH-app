@@ -77,17 +77,17 @@ if "generate" not in st.session_state:
 st.subheader("Select Division:")
 col1, col2, col3 = st.columns(3)
 with col1:
-    if st.button("Ψ Combat"):
+    if st.button("Ψ Combat Ψ"):
         st.session_state.division = "combat"
         st.session_state.rank = None
         st.session_state.generate = False
 with col2:
-    if st.button("Φ Diplomat"):
+    if st.button("Φ Diplomat Φ"):
         st.session_state.division = "diplomat"
         st.session_state.rank = None
         st.session_state.generate = False
 with col3:
-    if st.button("Σ Librarian"):
+    if st.button("Σ Librarian Σ"):
         st.session_state.division = "librarian"
         st.session_state.rank = "Σ-X | Whisperer"
         st.session_state.generate = False
@@ -98,7 +98,7 @@ st.session_state.name = name_input.strip()
 
 # === Rank Buttons ===
 if st.session_state.division == "combat":
-    st.subheader("Select Ψ Rank")
+    st.subheader("Select Ψ Rank:")
     cols = st.columns(9)
     for i in range(9):
         with cols[i]:
@@ -107,7 +107,7 @@ if st.session_state.division == "combat":
                 st.session_state.generate = False
 
 elif st.session_state.division == "diplomat":
-    st.subheader("Select Φ Rank")
+    st.subheader("Select Φ Rank:")
     d1, d2, d3 = st.columns(3)
     if d1.button("Φ-1"):
         st.session_state.rank = "Φ-1 | Jr. Scribe"
