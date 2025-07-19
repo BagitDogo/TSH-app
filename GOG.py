@@ -102,15 +102,15 @@ with div_cols[0]:
         st.session_state.generate = False
 
 with div_cols[1]:
-    if st.button("Φ Whisperer Φ", key="division_diplomat"):  # Diplomat is now "Whisperer"
+    if st.button("Φ Whisperer Φ", key="division_diplomat"):
         st.session_state.division = "diplomat"
         st.session_state.rank = None
         st.session_state.generate = False
 
 with div_cols[2]:
-    if st.button("Σ Scribe Σ", key="division_librarian"):  # Librarian is now "Scribe"
+    if st.button("Σ Scribe Σ", key="division_librarian"):
         st.session_state.division = "librarian"
-        st.session_state.rank = "Σ-X | Scribe"  # updated tag title
+        st.session_state.rank = "Σ-X | Scribe"
         st.session_state.generate = False
 
 # === Name Input ===
@@ -147,4 +147,42 @@ if st.button("Generate Command", key="generate_command"):
 if st.session_state.generate and st.session_state.name and st.session_state.rank:
     name = st.session_state.name
     rank = st.session_state.rank
-    div = st.s
+    div = st.session_state.division
+    morph = ""
+    hp = 100
+    rank2 = ""
+
+    if div == "combat":
+        morphs = ["TSHLR", "TSHPLR", "TSHMR"]
+        titles = [
+            "INITIATE", "SPELLMARKED", "VEILWALKER",
+            "EDGEBEARER", "LOREHUNTER", "MINDSHROUND",
+            "PATHBINDER", "SERPENT'S EYE", "GLYPHBLADE"
+        ]
+        morph = morphs[(rank - 1) // 3]
+        hp = 125 if rank > 6 else 100
+        rank2 = f"Serpent's Hand | Ψ-{rank} | {titles[rank - 1]}"
+
+    elif div == "diplomat":
+        idx = int(rank.split("-")[1][0]) - 1  # fixed indexing
+        morph = ["TSHJSC", "TSHSC", "TSHSSC"][idx]
+        rank2 = f"Serpent's Hand | Φ-{idx + 1} | {['Jr. Whisperer', 'Whisperer', 'Sr. Whisperer'][idx]}"
+
+    elif div == "librarian":
+        morph = "TSHWS"
+        rank2 = "Serpent's Hand | Σ-X | Scribe"
+
+    cmd = (
+        f"run permmorph {name} {morph} & "
+        f"permmaxhealth {name} {hp} & "
+        f"cntag {name} 110 110 110 & "
+        f"crtag {name} 110 139 61 & "
+        f"rtag {name} {rank2}"
+    )
+
+    st.markdown("---")
+    st.subheader("✅ Generated Morph Command")
+    st.code(cmd, language="bash")
+
+elif st.session_state.generate and not st.session_state.name:
+    st.warning("Please enter a name.")
