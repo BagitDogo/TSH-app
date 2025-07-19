@@ -96,19 +96,19 @@ st.subheader("Select Division:")
 div_cols = st.columns(3)
 
 with div_cols[0]:
-    if st.button("Ψ Combat Ψ", key="division_combat"):
+    if st.button("Ψ BookBurned Ψ", key="division_combat"):
         st.session_state.division = "combat"
         st.session_state.rank = None
         st.session_state.generate = False
 
 with div_cols[1]:
-    if st.button("Φ Diplomat Φ", key="division_diplomat"):
+    if st.button("Φ Scribe Φ", key="division_diplomat"):
         st.session_state.division = "diplomat"
         st.session_state.rank = None
         st.session_state.generate = False
 
 with div_cols[2]:
-    if st.button("Σ Librarian Σ", key="division_librarian"):
+    if st.button("Σ Whisperer Σ", key="division_librarian"):
         st.session_state.division = "librarian"
         st.session_state.rank = "Σ-X | Whisperer"
         st.session_state.generate = False
